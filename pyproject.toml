@@ -7,7 +7,10 @@ name = "animal_classification"
 version = "0.0.1"
 description = "Proyecto para clasificacion de imagenes de animales"
 authors = [
-  { name = "Your name (or your organization/company/team)" },
+  { name = " Amir Sadour Gutierrez", email = "a.sadour@uniandes.edu.co" },
+  { name = "Camilo Andrés Rodríguez Salamanca ", email = "ca.rodriguezs123@uniandes.edu.co" },
+  { name = "Claudia Johana Agudelo Arango", email = "cj.agudelo@uniandes.edu.co" },
+  { name = "Luis Gerardo Manrique Cardona ", email = "l.manriquec@uniandes.edu.co" }
 ]
 
 readme = "README.md"
