@@ -15,10 +15,15 @@ Estructura principal (resumida)
 - `Makefile` — comandos de conveniencia (`make test`, `make lint`, `make format`, etc.)
 - `pyproject.toml` — metadata del proyecto y configuración de herramientas (black/isort/ruff/pytest)
 - `.pre-commit-config.yaml` — hooks que se ejecutan antes de commitear
-- `animal_classification/` — paquete de la aplicación (entrypoints y código de app/train/serve)
-- `data/` — raw / interim / processed / external (gestión con DVC para datos grandes)
-- `models/` — artefactos/weights (no versionar pesos pesados en git)
-- `notebooks/` — experimentos y análisis (recomendado usar `jupytext`/`nbqa` si quieres formatearlos)
+- `animal_classification/` — paquete de la aplicación; contiene el código fuente organizado por responsabilidad:
+  - `animal_classification/app.py` o `animal_classification/app/` — entrada para servir la app (Gradio/serve wrappers)
+  - `animal_classification/datasets/` — clases y utilidades para cargar, preprocesar y transformar datasets (data loaders)
+  - `animal_classification/models/` — definiciones de modelos, arquitecturas y utilidades relacionadas (NO almacenar pesos grandes aquí)
+  - `animal_classification/train/` — scripts y funciones del loop de entrenamiento y pipelines de experimentación
+  - `animal_classification/serve/` — código de inferencia y adaptadores para exponer el modelo (p. ej. Gradio handlers)
+  - `animal_classification/utils/` — utilidades compartidas (I/O, métricas, transforms, logging)
+- `data/` — Sólo se encuentra en local, debido a que es gestionada con DVC (no versionar datos pesados en git)
+- `notebooks/` — experimentos y análisis
 - `tests/` — pruebas unitarias e integradas (pytest)
 
 Comandos importantes
@@ -32,11 +37,6 @@ Comandos importantes
 
   - Instalar hooks localmente: `pre-commit install` o `make precommit-install`
   - Ejecutar todos los hooks en el repo: `pre-commit run --all-files` o `make check`
-
-- Formateo / lint:
-
-  - Formatear: `make format` (isort + black) o `make fmt`
-  - Comprobar linters: `make lint` (ruff, isort --check, black --check, mypy)
 
 - Tests:
   - Ejecutar pruebas: `make test` (ejecuta `pytest --cov=animal_classification`)
