@@ -38,6 +38,13 @@ dev = [
   "pytest-cov",
   "pytest-mock",
 ]
+notebooks = [
+    "imagehash>=4.3.2",
+    "ipykernel>=6.30.1",
+    "matplotlib>=3.10.5",
+    "pillow>=11.3.0",
+    "seaborn>=0.13.2",
+]
 
 
 [tool.black]
