@@ -30,8 +30,16 @@ Comandos importantes
 
 - Instalar dependencias / sincronizar (uv):
 
-  - `uv sync` (usa el lock / pyproject para instalar deps)
   - `uv venv --python 3.11` (crear venv con `uv`)
+  - `uv sync` (usa el lock / pyproject para instalar deps)
+    - Para instalar sólo las dependencias principales (comportamiento por defecto):
+      - `uv sync`
+    - Para incluir un grupo concreto (p. ej. herramientas de desarrollo):
+      - `uv sync --group dev`
+    - Para excluir un grupo del proceso de sincronización:
+      - `uv sync --no-group notebooks`
+    - Puedes combinar inclusión y exclusión:
+      - `uv sync --group dev --no-group notebooks`
 
 - Pre-commit:
 
