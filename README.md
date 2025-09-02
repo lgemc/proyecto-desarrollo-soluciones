@@ -49,6 +49,10 @@ Comandos importantes
 - Tests:
   - Ejecutar pruebas: `make test` (ejecuta `pytest --cov=animal_classification`)
 
+- Aplicación:
+  - Ejecutar servidor FastAPI: `make app-run` (ejecuta `uvicorn animal_classification.app.main:app --reload`)
+  - Ejecutar CLI: `make cli ARGS="inference classification resnet --image data/Rhino/Rhino_298.jpg"` (ejecuta `uv run cli/main.py` con argumentos)
+
 Configuración y dependencias
 
 - Las herramientas de desarrollo (black, isort, ruff, pre-commit, mypy, pytest, etc.) están en `pyproject.toml` como extras (`[project.optional-dependencies].dev`).

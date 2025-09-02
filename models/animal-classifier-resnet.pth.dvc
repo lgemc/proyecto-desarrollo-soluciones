@@ -1,0 +1,5 @@
+outs:
+- md5: d72807593ec3be9a84518fbd58c79831
+  size: 144812779
+  hash: md5
+  path: animal-classifier-resnet.pth
