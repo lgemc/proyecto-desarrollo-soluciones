@@ -71,6 +71,16 @@ create_environment:
 test:
 	pytest --cov=animal_classification
 
+## Run the FastAPI backend server
+.PHONY: app-run
+app-run:
+	uv run uvicorn animal_classification.app.main:app --reload
+
+## Run CLI with arguments (usage: make cli ARGS="inference classification resnet --image data/Rhino/Rhino_298.jpg")
+.PHONY: cli
+cli:
+	uv run cli/main.py $(ARGS)
+
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################
