@@ -222,13 +222,13 @@ def main():
                         help='Número de épocas de entrenamiento')
     parser.add_argument('--batch_size', type=int, default=32, 
                         help='Tamaño del lote')
-    parser.add_argument('--learning_rate', type=float, default=0.005, 
+    parser.add_argument('--learning_rate', type=float, default=0.0005, 
                         help='Tasa de aprendizaje')
     parser.add_argument('--experiment_name', type=str, default='resnet50_classification',
                         help='Nombre del experimento en MLFlow')
     parser.add_argument('--run_name', type=str, default=None,
                         help='Nombre del run en MLFlow')
-    parser.add_argument('--dropout_rate', type=float, default=0.3,
+    parser.add_argument('--dropout_rate', type=float, default=0.2,
                         help='Tasa de dropout')
     args = parser.parse_args()
 

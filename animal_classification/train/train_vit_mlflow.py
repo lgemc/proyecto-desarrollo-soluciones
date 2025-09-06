@@ -226,11 +226,11 @@ def main():
     parser = argparse.ArgumentParser(description='Entrenar Vision Transformer con MLFlow')
     parser.add_argument('--data_path', type=str, default='data', 
                         help='Ruta a los datos de entrenamiento')
-    parser.add_argument('--epochs', type=int, default=3, 
+    parser.add_argument('--epochs', type=int, default=4, 
                         help='Número de épocas de entrenamiento')
     parser.add_argument('--batch_size', type=int, default=32, 
                         help='Tamaño del lote')
-    parser.add_argument('--learning_rate', type=float, default=2e-5, 
+    parser.add_argument('--learning_rate', type=float, default=2e-4, 
                         help='Tasa de aprendizaje')
     parser.add_argument('--model_name', type=str, default='google/vit-base-patch16-224',
                         help='Nombre del modelo ViT preentrenado')
