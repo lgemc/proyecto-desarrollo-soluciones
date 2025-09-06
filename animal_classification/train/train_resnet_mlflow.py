@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 """
 Script de entrenamiento de ResNet50 con MLFlow para clasificación de imágenes
-Migrado desde notebook convolutional-classifier.ipynb
 """
 
-import os
 import argparse
 import torch
 from torchvision import models, transforms, datasets
@@ -16,7 +14,6 @@ from torchvision.models import resnet50, ResNet50_Weights
 from torch.optim.lr_scheduler import StepLR
 from PIL import Image
 import mlflow
-import mlflow.pytorch
 from pathlib import Path
 
 def setup_device():
@@ -59,14 +56,14 @@ def load_data(data_path, batch_size=32, train_split=0.8):
 
 class FinetuneResnet(nn.Module):
     """Modelo ResNet50 con fine-tuning para clasificación"""
-    def __init__(self, num_classes):
+    def __init__(self, num_classes, dropout_rate=0.3):
         super().__init__()
         self.backbone = resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
         in_feats = self.backbone.fc.in_features  # 2048
         self.backbone.fc = nn.Sequential(
             nn.Linear(in_feats, 2048),
             nn.ReLU(inplace=True),
-            nn.Dropout(0.3),
+            nn.Dropout(dropout_rate),
             nn.Linear(2048, num_classes),
         )
         
@@ -222,19 +219,21 @@ def main():
     parser = argparse.ArgumentParser(description='Entrenar ResNet50 con MLFlow')
     parser.add_argument('--data_path', type=str, default='data', 
                         help='Ruta a los datos de entrenamiento')
-    parser.add_argument('--epochs', type=int, default=2, 
+    parser.add_argument('--epochs', type=int, default=10, 
                         help='Número de épocas de entrenamiento')
     parser.add_argument('--batch_size', type=int, default=32, 
                         help='Tamaño del lote')
-    parser.add_argument('--learning_rate', type=float, default=0.0005, 
+    parser.add_argument('--learning_rate', type=float, default=0.005, 
                         help='Tasa de aprendizaje')
     parser.add_argument('--experiment_name', type=str, default='resnet50_classification',
                         help='Nombre del experimento en MLFlow')
     parser.add_argument('--run_name', type=str, default=None,
                         help='Nombre del run en MLFlow')
-    
+    parser.add_argument('--dropout_rate', type=float, default=0.3,
+                        help='Tasa de dropout')
     args = parser.parse_args()
 
+    mlflow.set_tracking_uri("http://54.198.195.213:8050")
     # Configurar MLFlow
     mlflow.set_experiment(args.experiment_name)
     
@@ -266,10 +265,10 @@ def main():
         mlflow.log_param("scheduler", "StepLR")
         mlflow.log_param("scheduler_step_size", 5)
         mlflow.log_param("scheduler_gamma", 0.1)
-        mlflow.log_param("dropout_rate", 0.3)
+        mlflow.log_param("dropout_rate", args.dropout_rate)
         
         # Inicializar modelo
-        model = FinetuneResnet(num_classes)
+        model = FinetuneResnet(num_classes, args.dropout_rate)
         model = model.to(device)
         
         # Función de pérdida y optimizador
@@ -302,34 +301,26 @@ def main():
             mlflow.log_metric(f"accuracy_{class_name}", acc)
         
         # Guardar y log del modelo
-        model_path = "best_resnet_model.pth"
-        torch.save({
-            'model_state_dict': model.state_dict(),
-            'optimizer_state_dict': optimizer.state_dict(),
-            'class_names': class_names,
-            'best_test_accuracy': best_test_acc
-        }, model_path)
+        #model_path = "best_resnet_model.pth"
+        #torch.save({
+        #    'model_state_dict': model.state_dict(),
+        #    'optimizer_state_dict': optimizer.state_dict(),
+        #    'class_names': class_names,
+        #    'best_test_accuracy': best_test_acc
+        #}, model_path)
         
         # Log del modelo en MLFlow
-        mlflow.pytorch.log_model(
-            model, 
-            "model",
-            registered_model_name=f"resnet50_classifier_{args.experiment_name}"
-        )
+        #mlflow.pytorch.log_model(
+        #    model, 
+        #    "model",
+        #    registered_model_name=f"resnet50_classifier_{args.experiment_name}"
+        #)
         
         # Log artefacto del modelo
-        mlflow.log_artifact(model_path)
-        
-        # Log reporte de clasificación como texto
-        with open("classification_report.txt", "w") as f:
-            f.write(report)
-        mlflow.log_artifact("classification_report.txt")
+        #mlflow.log_artifact(model_path)
         
         print(f"Experimento completado. Mejor exactitud: {best_test_acc:.2f}%")
-        print(f"Modelo guardado como: {model_path}")
-        
-        os.remove(model_path)
-        os.remove("classification_report.txt")
+ 
 
 if __name__ == "__main__":
     main()
