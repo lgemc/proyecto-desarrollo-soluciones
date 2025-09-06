@@ -232,7 +232,7 @@ def main():
                         help='Tasa de dropout')
     args = parser.parse_args()
 
-    mlflow.set_tracking_uri("http://54.198.195.213:8050")
+    #mlflow.set_tracking_uri("http://54.198.195.213:8050")
     # Configurar MLFlow
     mlflow.set_experiment(args.experiment_name)
     
