@@ -211,9 +211,9 @@ def train_model(model, train_loader, val_loader, optimizer, device, num_epochs=3
         # Save the best model
         if val_accuracy > best_val_accuracy:
             best_val_accuracy = val_accuracy
-            print(f"   ✅ New best accuracy! Saving model...")
+            print(f"New best accuracy! Saving model...")
         else:
-            print(f"   No improvement. Best remains: {best_val_accuracy:.4f} ({best_val_accuracy*100:.2f}%)")
+            print(f"No improvement. Best remains: {best_val_accuracy:.4f} ({best_val_accuracy*100:.2f}%)")
 
     print(f"\n{'='*60}")
     print(f"Fine-tuning completed!")
@@ -245,6 +245,7 @@ def main():
     
     args = parser.parse_args()
 
+    mlflow.set_tracking_uri("http://54.198.195.213:8050")
     # Configurar MLFlow
     mlflow.set_experiment(args.experiment_name)
     
@@ -350,9 +351,9 @@ def main():
         #    },
         #    artifact_path="model",
         #    registered_model_name=f"vit_classifier_{args.experiment_name}"
-        #)   
+        #)
         
-        print(f"EXPERIMENTO COMPLETADO")
+        print(f"Experimento completado. Mejor exactitud: {best_val_acc:.2f}%")
 
 if __name__ == "__main__":
     main()

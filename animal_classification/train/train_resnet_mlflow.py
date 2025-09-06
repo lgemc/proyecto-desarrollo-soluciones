@@ -5,14 +5,13 @@ Script de entrenamiento de ResNet50 con MLFlow para clasificación de imágenes
 
 import argparse
 import torch
-from torchvision import models, transforms, datasets
+from torchvision import transforms, datasets
 from torch import nn
 from torch import optim
 import numpy as np
 from sklearn.metrics import classification_report
 from torchvision.models import resnet50, ResNet50_Weights
 from torch.optim.lr_scheduler import StepLR
-from PIL import Image
 import mlflow
 from pathlib import Path
 
