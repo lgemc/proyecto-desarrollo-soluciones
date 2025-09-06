@@ -21,6 +21,7 @@ classifiers = [
 
 dependencies = [
     "click>=8.0.0",
+    "dvc>=3.63.0",
     "fastapi>=0.104.0",
     "matplotlib>=3.10.5",
     "notebook>=7.4.5",
