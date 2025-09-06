@@ -7,7 +7,6 @@ Migrado desde notebook convolutional-classifier.ipynb
 import os
 import argparse
 import torch
-import matplotlib.pyplot as plt
 from torchvision import models, transforms, datasets
 from torch import nn
 from torch import optim
