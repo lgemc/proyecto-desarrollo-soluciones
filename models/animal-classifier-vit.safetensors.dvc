@@ -1,0 +1,5 @@
+outs:
+- md5: ce6d109a36cc057635fd04c47410c23f
+  size: 343230128
+  hash: md5
+  path: animal-classifier-vit.safetensors
