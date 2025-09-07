@@ -2,7 +2,7 @@
 
 Proyecto para clasificación de imágenes de animales.
 
-Resumen rápido
+## Resumen rápido
 
 - Código de la aplicación: `animal_classification/` (paquete en la raíz).
 - Configuración centralizada en `pyproject.toml` (formatters, linters, extras de dependencias).
@@ -10,7 +10,7 @@ Resumen rápido
 - Gestión de entorno/deps con `uv` (se usan `uv sync`, `uv venv`, `uv lock`).
 - Tests: `tests/` (pytest + pytest-cov).
 
-Estructura principal (resumida)
+## Estructura principal (resumida)
 
 - `Makefile` — comandos de conveniencia (`make test`, `make lint`, `make format`, etc.)
 - `pyproject.toml` — metadata del proyecto y configuración de herramientas (black/isort/ruff/pytest)
@@ -26,7 +26,7 @@ Estructura principal (resumida)
 - `notebooks/` — experimentos y análisis
 - `tests/` — pruebas unitarias e integradas (pytest)
 
-Comandos importantes
+## Comandos importantes
 
 - Instalar dependencias / sincronizar (uv):
 
@@ -53,7 +53,7 @@ Comandos importantes
   - Ejecutar servidor FastAPI: `make app-run` (ejecuta `uvicorn animal_classification.app.main:app --reload`)
   - Ejecutar CLI: `make cli ARGS="inference classification resnet --image data/Rhino/Rhino_298.jpg"` (ejecuta `uv run cli/main.py` con argumentos)
 
-Configuración y dependencias
+## Configuración y dependencias
 
 - Las herramientas de desarrollo (black, isort, ruff, pre-commit, mypy, pytest, etc.) están en `pyproject.toml` como extras (`[project.optional-dependencies].dev`).
 - Dependencias de datos/ML se agrupan en un extra `data` (puedes instalar `pip install -e .[data]` o usar `uv` para sincronizar).
