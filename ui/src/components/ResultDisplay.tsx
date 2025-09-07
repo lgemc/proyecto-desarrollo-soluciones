@@ -4,6 +4,7 @@ interface ResultDisplayProps {
     name: string;
     alt: string;
   };
+  selectedImage?: string;
 }
 
 const defaultResult = {
@@ -12,19 +13,23 @@ const defaultResult = {
   alt: "Zebra"
 };
 
-export default function ResultDisplay({ result }: ResultDisplayProps) {
-  const currentResult = result || defaultResult;
+export default function ResultDisplay({ result, selectedImage }: ResultDisplayProps) {
+  const displayImage = selectedImage || defaultResult.image;
   
   return (
-    <div className="w-1/2 p-6">
-      <h2 className="text-gray-600 font-semibold mb-4">Resultado:</h2>
+    <div className="w-1/2 p-6 flex flex-col items-center justify-center border-l">
+      <h2 className="text-center text-gray-600 font-semibold mb-4">Resultado</h2>
       <div className="text-center">
         <img 
-          src={currentResult.image}
-          alt={currentResult.alt}
-          className="w-32 h-32 mx-auto mb-4 rounded" 
+          src={displayImage}
+          alt={result?.alt || defaultResult.alt}
+          className="w-32 h-32 mx-auto mb-4 rounded object-cover" 
         />
-        <h3 className="text-2xl font-semibold text-gray-800">{currentResult.name}</h3>
+        {result ? (
+          <h3 className="text-2xl font-semibold text-gray-800">{result.name}</h3>
+        ) : (
+          <h3 className="text-2xl font-semibold text-gray-400">-</h3>
+        )}
       </div>
     </div>
   );

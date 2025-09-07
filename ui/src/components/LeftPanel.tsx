@@ -1,18 +1,24 @@
-import Header from './Header';
 import ImageUpload from './ImageUpload';
+import ImagePreview from "../assets/image-preview.png";
+import { ClassificationResponse } from '../shared/api/classify';
 
-export default function LeftPanel() {
+interface LeftPanelProps {
+  onImageSelect?: (file: File, previewUrl: string) => void;
+  onClassificationResult?: (result: ClassificationResponse) => void;
+}
+
+export default function LeftPanel({ onImageSelect, onClassificationResult }: LeftPanelProps) {
   return (
-    <div className="bg-green-600 text-white p-6 flex flex-col items-center justify-center w-1/2">
+    <div className="p-6 flex flex-col items-center justify-center w-1/2">
       <div className="bg-white p-2 rounded-lg mb-4">
-        <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center">
-          <span className="text-white text-sm">🦁</span>
+        <div className="w-60 h-60 rounded flex items-center justify-center">
+          <img src={ImagePreview} alt="Logo" className="max-w-full max-h-full" />
         </div>
       </div>
-      <h1 className="text-2xl font-bold mb-2">FAUNA</h1>
-      <p className="text-sm mb-1">SCAN</p>
-      <p className="text-xs text-center mb-6">Herramienta de<br/>Clasificación de animales</p>
-      <ImageUpload />
+      <ImageUpload 
+        onImageSelect={onImageSelect}
+        onClassificationResult={onClassificationResult}
+      />
     </div>
   );
 }
