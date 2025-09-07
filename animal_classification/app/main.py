@@ -4,7 +4,7 @@ import sys
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from animal_classification.inference.resnet_classifier import ResNetInference
-from animal_classification.shared.logger import Logger
+from animal_classification.utils.logger import Logger
 
 project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
