@@ -192,3 +192,6 @@ cython_debug/
 
 # Model file
 notebooks/best_resnet_model.pth
+
+# Node applications
+**node_modules**
