@@ -6,7 +6,7 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-from animal_classification.inference.resnet_classifier import ResNetInference
+from animal_classification.inference.onnx_classifier import ONNXInference
 from animal_classification.utils.logger import Logger
 
 project_root = Path(__file__).parent.parent.parent
@@ -34,7 +34,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-classifier = ResNetInference(model_path=project_root / 'models' / 'animal-classifier-resnet.pth')
+classifier = ONNXInference(model_path=project_root / 'models' / 'animal-classifier-resnet.onnx')
 
 # Mount static files for frontend
 static_path = project_root / 'static'
