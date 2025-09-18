@@ -3,6 +3,9 @@ from contextlib import asynccontextmanager
 import sys
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from animal_classification.inference.resnet_classifier import ResNetInference
 from animal_classification.utils.logger import Logger
 
@@ -23,7 +26,20 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(title="Animal Classification API", version="1.0.0", lifespan=lifespan)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 classifier = ResNetInference(model_path=project_root / 'models' / 'animal-classifier-resnet.pth')
+
+# Mount static files for frontend
+static_path = project_root / 'static'
+if static_path.exists():
+    app.mount("/static", StaticFiles(directory=static_path), name="static")
 
 @app.get("/api/v1/health")
 async def health_check():
@@ -47,3 +63,27 @@ async def classify_image(image: UploadFile = File(...)):
     except Exception as e:
         logger.error(f"Classification failed for {image.filename}: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Classification failed: {str(e)}")
+
+# Serve frontend at root path
+@app.get("/{full_path:path}")
+async def serve_frontend(full_path: str):
+    """Serve frontend files for all non-API routes"""
+    # Don't serve frontend for API routes
+    if full_path.startswith("api/"):
+        raise HTTPException(status_code=404, detail="Not found")
+
+    static_path = project_root / 'static'
+    if not static_path.exists():
+        raise HTTPException(status_code=404, detail="Frontend not available")
+
+    # Try to serve the requested file
+    file_path = static_path / full_path
+    if file_path.exists() and file_path.is_file():
+        return FileResponse(file_path)
+
+    # For SPA, serve index.html for all other routes
+    index_path = static_path / 'index.html'
+    if index_path.exists():
+        return FileResponse(index_path)
+
+    raise HTTPException(status_code=404, detail="Not found")
