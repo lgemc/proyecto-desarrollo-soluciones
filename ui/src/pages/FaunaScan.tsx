@@ -3,6 +3,7 @@ import LeftPanel from '../components/LeftPanel';
 import Header from '../components/Header';
 import ResultDisplay from '../components/ResultDisplay';
 import { ClassificationResponse } from '../shared/api/classify';
+import { translateAnimal } from '../shared/translations';
 
 export default function FaunaScan() {
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
@@ -19,8 +20,8 @@ export default function FaunaScan() {
 
   const resultForDisplay = classificationResult ? {
     image: selectedImageUrl || '',
-    name: classificationResult.classification_label,
-    alt: classificationResult.classification_label
+    name: translateAnimal(classificationResult.classification_label),
+    alt: translateAnimal(classificationResult.classification_label)
   } : undefined;
 
   return (

@@ -34,8 +34,8 @@ def preprocess_image_for_onnx(image_bytes: bytes) -> np.ndarray:
     image_array = np.array(image, dtype=np.float32)
 
     # Normalize using ImageNet means and stds
-    mean = np.array([0.485, 0.456, 0.406]) * 255.0
-    std = np.array([0.229, 0.224, 0.225]) * 255.0
+    mean = np.array([0.485, 0.456, 0.406], dtype=np.float32) * 255.0
+    std = np.array([0.229, 0.224, 0.225], dtype=np.float32) * 255.0
 
     image_array = (image_array - mean) / std
 
@@ -43,4 +43,5 @@ def preprocess_image_for_onnx(image_bytes: bytes) -> np.ndarray:
     image_array = np.transpose(image_array, (2, 0, 1))  # HWC to CHW
     image_array = np.expand_dims(image_array, axis=0)    # Add batch dimension
 
-    return image_array
+    # Ensure the final array is float32
+    return image_array.astype(np.float32)
