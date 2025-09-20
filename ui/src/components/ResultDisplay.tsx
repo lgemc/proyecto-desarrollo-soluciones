@@ -17,13 +17,13 @@ export default function ResultDisplay({ result, selectedImage }: ResultDisplayPr
   const displayImage = selectedImage || defaultResult.image;
   
   return (
-    <div className="w-1/2 p-6 flex flex-col items-center justify-center border-l">
+    <div className="w-full md:w-1/2 p-4 sm:p-6 flex flex-col items-center justify-center border-t md:border-t-0 md:border-l">
       <h2 className="text-center text-gray-600 font-semibold mb-4">Resultado</h2>
       <div className="text-center">
         <img 
           src={displayImage}
           alt={result?.alt || defaultResult.alt}
-          className="w-32 h-32 mx-auto mb-4 rounded object-cover" 
+          className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4 rounded object-cover" 
         />
         {result ? (
           <h3 className="text-2xl font-semibold text-gray-800">{result.name}</h3>
