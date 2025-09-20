@@ -12,7 +12,6 @@ resource "aws_cloudwatch_log_group" "ecs_logs" {
 # ECS Cluster
 resource "aws_ecs_cluster" "main" {
   name = "${var.app_name}-cluster"
-
   setting {
     name  = "containerInsights"
     value = "enabled"
@@ -87,7 +86,11 @@ resource "aws_ecs_service" "app" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.app.arn
   desired_count   = 1
-  launch_type     = "FARGATE"
+
+  capacity_provider_strategy {
+    capacity_provider = "FARGATE_SPOT"
+    weight            = 1
+  }
 
   network_configuration {
     security_groups  = [aws_security_group.ecs_service.id]
@@ -103,5 +106,16 @@ resource "aws_ecs_service" "app" {
   tags = {
     Name        = "${var.app_name}-service"
     Environment = var.environment
+  }
+}
+
+# ECS Cluster Capacity Providers
+resource "aws_ecs_cluster_capacity_providers" "main" {
+  cluster_name       = aws_ecs_cluster.main.name
+  capacity_providers = ["FARGATE", "FARGATE_SPOT"]
+
+  default_capacity_provider_strategy {
+    capacity_provider = "FARGATE_SPOT"
+    weight            = 1
   }
 }
