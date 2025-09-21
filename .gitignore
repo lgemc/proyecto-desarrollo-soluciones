@@ -195,3 +195,6 @@ notebooks/best_resnet_model.pth
 
 # Node applications
 **node_modules**
+
+# MLFlow
+mlruns/
