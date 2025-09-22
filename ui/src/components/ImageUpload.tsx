@@ -40,8 +40,8 @@ export default function ImageUpload({ onImageSelect, onClassificationResult }: I
   };
 
   return (
-    <div className="bg-white bg-opacity-20 rounded-lg p-8 text-center">
-      <p className="text-xs mb-4">Selecciona una imagen de un<br/>animal para clasificarlo.</p>
+    <div className="bg-white bg-opacity-20 rounded-lg p-4 sm:p-8 text-center">
+      <p className="text-xs mb-4 px-2">Selecciona una imagen de un<br/>animal para clasificarlo.</p>
       
       <input
         type="file"
@@ -55,7 +55,7 @@ export default function ImageUpload({ onImageSelect, onClassificationResult }: I
         {!selectedImage ? (
           <label
             htmlFor="image-upload"
-            className="bg-green-200 text-green-800 px-4 py-2 rounded text-sm cursor-pointer hover:bg-green-300 inline-block"
+            className="bg-green-200 text-green-800 px-3 py-2 sm:px-4 rounded text-sm cursor-pointer hover:bg-green-300 inline-block"
           >
             Seleccionar imagen
           </label>

@@ -55,3 +55,16 @@ Proyecto para clasificación de imágenes de animales.
 
 - Las herramientas de desarrollo (black, isort, ruff, pre-commit, mypy, pytest, etc.) están en `pyproject.toml` como extras (`[project.optional-dependencies].dev`).
 - Dependencias de datos/ML se agrupan en un extra `data` (puedes instalar `pip install -e .[data]` o usar `uv` para sincronizar).
+
+# Deployment
+
+Para construir la imagen de docker
+
+```bash
+ docker build -f infra/Dockerfile --tag proyecto-desarrollo-soluciones .
+```
+Ejecutar local :
+
+```bash
+ docker run -p 8000:8000 proyecto-desarrollo-soluciones
+```

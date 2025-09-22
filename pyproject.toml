@@ -19,35 +19,32 @@ classifiers = [
     
 ]
 
-dependencies = [
-    "click>=8.0.0",
-    "dvc>=3.63.0",
-    "fastapi>=0.104.0",
-    "matplotlib>=3.10.5",
-    "notebook>=7.4.5",
-    "pandas>=2.3.1",
-    "pillow>=11.3.0",
-    "python-multipart>=0.0.6",
-    "scikit-learn>=1.7.1",
-    "seaborn>=0.13.2",
-    "torch>=2.8.0",
-    "torchvision>=0.23.0",
-    "uvicorn>=0.24.0",
-]
-
 requires-python = ">=3.11,<3.14"
 
 [dependency-groups]
+production = [
+    "fastapi>=0.104.0",
+    "pillow>=11.3.0",
+    "python-multipart>=0.0.6",
+    "uvicorn>=0.24.0",
+    "onnxruntime>=1.18.0",
+    "numpy>=1.24.0",
+]
 dev = [
   "black",
   "isort",
   "ruff",
+  "torch",
+  "torchvision",
+  "onnx",
+  "onnxruntime-tools",
   "pre-commit",
   "mypy",
   "flake8",
   "pytest",
   "pytest-cov",
   "pytest-mock",
+  "pyinstaller>=6.16.0",
 ]
 notebooks = [
     "imagehash>=4.3.2",
