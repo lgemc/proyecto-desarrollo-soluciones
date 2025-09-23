@@ -45,6 +45,8 @@ dev = [
   "pytest-cov",
   "pytest-mock",
   "pyinstaller>=6.16.0",
+  "mlflow>=3.4.0",
+  "scikit-learn>=1.7.1",
 ]
 notebooks = [
     "imagehash>=4.3.2",

@@ -299,24 +299,27 @@ def main():
         for class_name, acc in per_class_acc.items():
             mlflow.log_metric(f"accuracy_{class_name}", acc)
         
-        # Guardar y log del modelo
-        #model_path = "best_resnet_model.pth"
-        #torch.save({
-        #    'model_state_dict': model.state_dict(),
-        #    'optimizer_state_dict': optimizer.state_dict(),
-        #    'class_names': class_names,
-        #    'best_test_accuracy': best_test_acc
-        #}, model_path)
+        model_path = Path("models/animal-classifier-resnet.pth")
+        model_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        torch.save({
+            'model_state_dict': model.state_dict(),
+            'optimizer_state_dict': optimizer.state_dict(),
+            'class_names': class_names,
+            'best_test_accuracy': best_test_acc
+        }, model_path)
+        
+        print(f"Modelo guardado en: {model_path}")
         
         # Log del modelo en MLFlow
-        #mlflow.pytorch.log_model(
-        #    model, 
-        #    "model",
-        #    registered_model_name=f"resnet50_classifier_{args.experiment_name}"
-        #)
+        mlflow.pytorch.log_model(
+            model, 
+            "model",
+            registered_model_name=f"resnet50_classifier_{args.experiment_name}"
+        )
         
         # Log artefacto del modelo
-        #mlflow.log_artifact(model_path)
+        mlflow.log_artifact(str(model_path))
         
         print(f"Experimento completado. Mejor exactitud: {best_test_acc:.2f}%")
  
